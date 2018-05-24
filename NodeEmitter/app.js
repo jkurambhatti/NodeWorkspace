@@ -1,19 +1,26 @@
 var Emitter = require('./emitter');
 var utils = require('./utils');
+var eventsConfig = require('./config').events;
 
 var emtr = new Emitter();
 
-emtr.on('greet', function () {
+emtr.on(eventsConfig.GREET, function () {
   console.log('Event Received');
   console.log('Hey there Hello');
 });
 
-emtr.on('greet', function () {
+emtr.on(eventsConfig.ONANGRY, function () {
   console.log('Event Received');
-  console.log('Oo la la la lu le o')
+  console.log('Oo la la la lu le o, GET LOST');
 });
 
 
-utils.randomEventGenerator(function () {
-  emtr.emit('greet');
+
+const allEvents = Object.keys(eventsConfig);
+
+allEvents.forEach( function(event) {
+  utils.randomEventGenerator(function () {
+    emtr.emit(eventsConfig[event]);
+  });
 });
+

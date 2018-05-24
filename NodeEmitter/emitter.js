@@ -10,9 +10,13 @@ Emitter.prototype.on = function(eventType, listener ){
 
 Emitter.prototype.emit = function(eventType){
   console.log('Emitting an event of type :', eventType);
-  this.events[eventType].forEach( function(item) {
-      item();
-  });
+  if (this.events[eventType]) {
+    this.events[eventType].forEach( function(handler) {
+        handler();
+    });
+  } else {
+    console.log('No Event handler registered for :' , eventType);
+  }
 };
 
 module.exports = Emitter;
